@@ -25,6 +25,27 @@ class HomeC extends Component {
     titile:'welcome'
   };
 
+    componentDidMount(){  
+        this.getNet();  
+    }  
+  
+    getNet(){  
+        fetch('http://gank.io/api/search/query/listview/category/福利/count/10/page/1')//请求地址  
+            .then((response) => response.json())//取数据  
+            .then((responseText) => {//处理数据  
+                //通过setState()方法重新渲染界面  
+                this.setState({  
+                    //改变加载ListView  
+                    load: true,  
+                    //设置数据源刷新界面  
+                    dataSource: this.state.dataSource.cloneWithRows(responseText.results),  
+                })  
+  
+            })  
+            .catch((error) => {  
+                console.warn(error);  
+            }).done();  
+    }  
   
 
   render() {
